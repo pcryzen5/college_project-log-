@@ -63,7 +63,8 @@ class _NoticePageState extends State<NoticePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Notices"),
-        centerTitle: true,
+        automaticallyImplyLeading: false,
+        //centerTitle: true,
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())

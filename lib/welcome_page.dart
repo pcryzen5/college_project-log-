@@ -41,7 +41,10 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hi, ${widget.username}!'),
+        backgroundColor: const Color(0xFF0C0569),
+        title: Text('Hi, ${widget.username}!',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         automaticallyImplyLeading: false,
       ),
       body: _pages[_selectedIndex], // Display selected tab's content
@@ -69,10 +72,11 @@ class _WelcomePageState extends State<WelcomePage> {
           ),
         ],
         currentIndex: _selectedIndex, // Highlight the selected item
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Color(0xE60C0569), // Custom color
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped, // Handle tab change
       ),
+
     );
   }
 }

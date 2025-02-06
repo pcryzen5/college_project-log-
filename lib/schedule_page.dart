@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 class SchedulePage extends StatefulWidget {
-  final String username; // Add a parameter for the student's username
+  final String username;
 
   const SchedulePage({super.key, required this.username});
 
@@ -31,10 +31,10 @@ class _SchedulePageState extends State<SchedulePage> {
       await db.open();
       print("Connected to MongoDB!");
 
-      // Access the 'students' collection to get the student's class
+      // Get student class
       final studentCollection = db.collection('students');
       final studentData = await studentCollection.findOne(
-        mongo.where.eq('username', widget.username), // Use the dynamic username
+        mongo.where.eq('username', widget.username),
       );
 
       if (studentData == null) {
@@ -46,9 +46,7 @@ class _SchedulePageState extends State<SchedulePage> {
         return;
       }
 
-      // Get the class_name of the student
       studentClass = studentData['class_name'];
-      //print("Student's class name: $studentClass");
 
       if (studentClass == null) {
         setState(() {
@@ -59,22 +57,16 @@ class _SchedulePageState extends State<SchedulePage> {
         return;
       }
 
-      // Access the 'schedules' collection to find matching schedules for the class
+      // Fetch schedules sorted by latest date first
       final scheduleCollection = db.collection('schedules');
-      //print("Querying schedules for class: $studentClass");
-
-      // Query schedules for the matching class name
       final result = await scheduleCollection
           .find(
-        mongo.where.eq('classes', studentClass), // Match the class name
+        mongo.where.eq('classes', studentClass).sortBy('dateTime', descending: true),
       )
           .toList();
 
-      //print("Query result: $result");
-
-      // Parse and format the result
+      // Format date fields
       final formattedResult = result.map((schedule) {
-        // Parse the dateTime field
         final rawDate = schedule['dateTime'];
         if (rawDate is mongo.Timestamp) {
           schedule['dateTime'] =
@@ -96,7 +88,6 @@ class _SchedulePageState extends State<SchedulePage> {
         isLoading = false;
       });
     } finally {
-      // Ensure the database connection is closed
       if (db != null && db.isConnected) {
         await db.close();
         print("Database connection closed.");
@@ -122,24 +113,18 @@ class _SchedulePageState extends State<SchedulePage> {
         itemBuilder: (context, index) {
           final schedule = schedules[index];
 
-          // Safely extract and format fields
           final title = schedule['title'] ?? 'No Title';
-          final professor =
-              schedule['professor'] ?? 'Unknown Professor'; // Added professor
+          final professor = schedule['professor'] ?? 'Unknown Professor';
           final rawDate = schedule['dateTime'];
           DateTime? date;
 
-          // Parse dateTime if it exists
           if (rawDate is DateTime) {
             date = rawDate.toLocal();
           } else if (rawDate is String) {
             date = DateTime.tryParse(rawDate)?.toLocal();
           }
 
-          // Format date and time
-          final time = date != null
-              ? date.toString().substring(11, 16)
-              : 'No Time';
+          final time = date != null ? date.toString().substring(11, 16) : 'No Time';
           final formattedDate = date != null
               ? '${date.day}-${date.month}-${date.year}'
               : 'No Date';
@@ -151,12 +136,11 @@ class _SchedulePageState extends State<SchedulePage> {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Professor: $professor"), // Display professor's name
+                  Text("Professor: $professor"),
                   Text("Time: $time"),
                   Text(
                     "Date: $formattedDate",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),

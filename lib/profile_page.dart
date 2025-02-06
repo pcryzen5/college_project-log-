@@ -83,7 +83,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Page'),
+        title: const Text('Profile Page',
+            style: TextStyle(color: Color(0xFF0C0569), fontWeight: FontWeight.bold),
+      ),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -115,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
-                color: Colors.blueAccent,
+                color: Color(0xE60C0569),
                 child: Text(
                   'Department: ${_profileData!['department'] ?? 'N/A'}',
                   style: const TextStyle(fontSize: 18, color: Colors.white),
