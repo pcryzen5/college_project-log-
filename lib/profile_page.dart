@@ -201,14 +201,20 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 16),
               ElevatedButton.icon(
                 onPressed: () {
-                  final url = _profileData!['ebooksLink'];
+                  final url = _profileData!['ebooks_link'];
+                  //print('E-Book URL: $url');
+                  //print('Full Profile Data: $_profileData');
                   if (url != null) {
                     _launchURL(url);
                   }
                 },
-                icon: const Icon(Icons.book),
-                label: const Text('E-Books'),
-              ),
+                icon: const Icon(Icons.book,color: Colors.white,),
+                label: const Text('E-Books',style: TextStyle(fontSize: 14, color: Colors.white),),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF231D77), // set the background color
+                ),
+              )
+
             ],
           ),
         ),
@@ -228,12 +234,16 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
+    print("E-Book URL: $url"); // Debugging
+
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
+      print("Could not open URL: $url");
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Could not open the link')),
       );
     }
   }
+
 }

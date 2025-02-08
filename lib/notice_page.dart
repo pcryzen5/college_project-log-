@@ -62,7 +62,9 @@ class _NoticePageState extends State<NoticePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Notices"),
+        title: const Text("Notices",
+          style: TextStyle(color: Color(0xFF0C0569), fontWeight: FontWeight.bold),
+        ),
         automaticallyImplyLeading: false,
         //centerTitle: true,
       ),

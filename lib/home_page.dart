@@ -86,7 +86,9 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Announcements"),
+      appBar: AppBar(title: const Text("Announcements",
+        style: TextStyle(color: Color(0xFF0C0569), fontWeight: FontWeight.bold),
+      ),
         automaticallyImplyLeading: false,
       ),
       body: isLoading

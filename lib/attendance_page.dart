@@ -169,7 +169,9 @@ class _AttendancePageState extends State<AttendancePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Attendance Overview"),
+        title: Text("Attendance Overview",
+          style: TextStyle(color: Color(0xFF0C0569), fontWeight: FontWeight.bold),
+        ),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
