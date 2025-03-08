@@ -55,7 +55,7 @@ class _NoticePageState extends State<NoticePage> {
 
   String formatDate(DateTime? dateTime) {
     if (dateTime == null) return "Date unavailable";
-    return DateFormat('dd-MM-yyyy hh:mm a').format(dateTime);
+    return DateFormat('dd-MM-yyyy ,hh:mm a').format(dateTime);
   }
 
   @override

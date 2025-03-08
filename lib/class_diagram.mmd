@@ -1,0 +1,52 @@
+classDiagram
+    class AttendancePage {
+        +String userName
+        +fetchUserIdAndAttendance()
+        +fetchAttendance()
+        +calculateTotalLectures()
+    }
+
+    class AnnouncementsPage {
+        +String username
+        +fetchAnnouncements()
+    }
+
+    class LoginPage {
+        +_usernameController
+        +_passwordController
+        +_login()
+    }
+
+    class MyApp {
+        +build()
+    }
+
+    class SplashScreen {
+        +initState()
+    }
+
+    class MongoHelper {
+        +authenticate(username, password)
+        +fetchProfile(username)
+    }
+
+    class NoticePage {
+        +fetchNotices()
+    }
+
+    class ProfilePage {
+        +String username
+        +_fetchProfile()
+    }
+
+    class SchedulePage {
+        +String username
+        +fetchSchedules()
+    }
+
+    AttendancePage --> MongoHelper : uses
+    AnnouncementsPage --> MongoHelper : uses
+    LoginPage --> WelcomePage : navigates to
+    NoticePage --> MongoHelper : uses
+    ProfilePage --> MongoHelper : uses
+    SchedulePage --> MongoHelper : uses
